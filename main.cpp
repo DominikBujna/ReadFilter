@@ -8,6 +8,9 @@ int main() {
     string line;
     while (getline(cin, line))
     {
+        if (line == "") {
+            break;
+        }
         if(line.at(0) == '>'){
             //find last position of _ as it preceeds coverage number
             size_t found = line.find_last_of('_');
@@ -15,14 +18,14 @@ int main() {
             string restofline = line.substr(0, found);
             int coverage = stoi(line.substr(found + 1));
             //remove _ separating length value from cov
-            found = line.find_last_of('_');
+            found = restofline.find_last_of('_');
             restofline = line.substr(0, found);
             //get seq length
-            found = line.find_last_of('_');
-            int length = stoi(restofline.substr(0, found));
+            found = restofline.find_last_of('_');
+            int length = stoi(restofline.substr(found + 1));
             //write out the line without > character
             if(coverage < minCoverage || length < minLength){
-                cout<<line.substr(1);
+                cout << line.substr(1) << "\n";
             }
         }
     }
